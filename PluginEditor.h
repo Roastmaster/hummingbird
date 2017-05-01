@@ -352,6 +352,7 @@ public:
                         postMessageToList(message, source->getName());
                     }
                     
+                    // Called when a note is pressed. Data is sent to output
                     void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override
                     {
                         MidiMessage m(MidiMessage::noteOn(midiChannel, midiNoteNumber, velocity));
@@ -364,6 +365,7 @@ public:
                         trackSequence.addEvent(m, Time::getMillisecondCounterHiRes());
                     }
                     
+                    // Called when a note is released. Data is sent to output
                     void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override
                     {
                         MidiMessage m(MidiMessage::noteOff(midiChannel, midiNoteNumber));
@@ -373,6 +375,7 @@ public:
                         trackSequence.addEvent(m, Time::getMillisecondCounterHiRes());
                     }
                     
+                    //Output description of actions
                     static String getMidiMessageDescription(const MidiMessage& m)
                     {
                         if (m.isNoteOn())           return "Note on " + MidiMessage::getMidiNoteName(m.getNoteNumber(), true, true, 3);
