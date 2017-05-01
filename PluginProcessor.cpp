@@ -2,7 +2,8 @@
  ==============================================================================
  
 Parts of the file were auto-generated! It contains the basic framework code for a JUCE plugin processor.
- Additons can be added to the fucntion not implemented.
+ Additons can be added to the fucntion not implemented. See .h file for function explainations
+
  
  ==============================================================================
  */
@@ -12,6 +13,11 @@ Parts of the file were auto-generated! It contains the basic framework code for 
 
 
 //==============================================================================
+/** Our audio processing class directly inherets from the JUCE AudioProcessor with the addition of tempo
+ ** This class interfaces with the JUCE classes and allow audio processing
+ ** We override some existing implementations and virtual functions
+ ** See .h file for function explainations
+ */
 HummingbirdAudioProcessor::HummingbirdAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
 : AudioProcessor (BusesProperties()
