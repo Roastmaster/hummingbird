@@ -1,13 +1,3 @@
-/*
- ==============================================================================
- 
- This file was auto-generated!
- 
- It contains the basic framework code for a JUCE plugin editor.
- 
- ==============================================================================
- */
-
 #ifndef PLUGINEDITOR_H_INCLUDED
 #define PLUGINEDITOR_H_INCLUDED
 
@@ -24,7 +14,10 @@
 
 
 //==============================================================================
-/**
+/** Our Microphone Class is a subclass of the AudioAppComponent class that is used by JUCE
+ ** Microphone configures the microphone for recording
+ ** and specifies the input and output like bitrate, chunksize
+ ** This class is also responsible for the pitch detection and midi note storage
  */
 class Microphone : public AudioAppComponent {
 public:
@@ -48,6 +41,7 @@ public:
         
     }
     
+    //Sets base line for pitch detection and silences
     Microphone(TextEditor* t)
     {
         midiDevice = MidiOutput::openDevice(0);
@@ -92,6 +86,8 @@ public:
     {
     }
     
+    
+    //Each audio block is analyzed and run through pitch detection
     void getNextAudioBlock(const AudioSourceChannelInfo& bufferToFill) override
     {
         
@@ -167,9 +163,13 @@ public:
                 }
                 myfile.close();
                 }
+
 private:
     TextEditor* messageBox;
     double startTime;
+    
+    //inner class is a member of the Microphone class
+    //Used for midi note processing
     class IncomingMessageCallback : public CallbackMessage
     {
     public:
@@ -247,7 +247,10 @@ private:
 };
                 
                 
-                
+//==============================================================================
+/** Our Metronome Class is also a subclass of the AudioAppComponent class that is used by JUCE
+** Microphone creates a metronome when the VST is activated allowing for a more accurate tempo
+*/
 class Metronome : public AudioAppComponent {
 public:
     AudioFormatReader* reader;

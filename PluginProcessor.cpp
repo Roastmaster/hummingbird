@@ -1,9 +1,8 @@
 /*
  ==============================================================================
  
- This file was auto-generated!
- 
- It contains the basic framework code for a JUCE plugin processor.
+Parts of the file were auto-generated! It contains the basic framework code for a JUCE plugin processor.
+ Additons can be added to the fucntion not implemented.
  
  ==============================================================================
  */
@@ -37,6 +36,7 @@ const String HummingbirdAudioProcessor::getName() const
     return JucePlugin_Name;
 }
 
+//bool to determine if the plguin uses midi input
 bool HummingbirdAudioProcessor::acceptsMidi() const
 {
 #if JucePlugin_WantsMidiInput
@@ -46,6 +46,7 @@ bool HummingbirdAudioProcessor::acceptsMidi() const
 #endif
 }
 
+//bool to determine if the plguin uses midi output
 bool HummingbirdAudioProcessor::producesMidi() const
 {
 #if JucePlugin_ProducesMidiOutput

@@ -54,6 +54,7 @@ startTime(Time::getMillisecondCounterHiRes() * 0.001)
     AudioProcessorEditor::addAndMakeVisible(&tempoMeter);
     tempoMeter.addListener (this);
     
+    //initialize the metronome
     Metronome metronome();
     microphone = new Microphone(&midiMessagesBox);
     
@@ -61,6 +62,7 @@ startTime(Time::getMillisecondCounterHiRes() * 0.001)
     keyboardState.addListener(this);
     keyboardComponent.setBounds(30, 80, 550, 100);
     
+    //setting the attributes of the messageBox
     AudioProcessorEditor::addAndMakeVisible(midiMessagesBox);
     midiMessagesBox.setMultiLine(true);
     midiMessagesBox.setReturnKeyStartsNewLine(true);
@@ -86,6 +88,7 @@ HummingbirdAudioProcessorEditor::~HummingbirdAudioProcessorEditor()
 }
 
 //==============================================================================
+//Basic UI generation
 void HummingbirdAudioProcessorEditor::paint (Graphics& g)
 {
     g.fillAll (Colours::white);
@@ -102,6 +105,7 @@ void HummingbirdAudioProcessorEditor::resized()
     // tempoMeter.setBounds (40, 30, 20, getHeight() - 60);
 }
 
+//This function starts the recording on botton click
 void HummingbirdAudioProcessorEditor::buttonClicked (Button* button)
 {
     if (button == &startRecordingButton)
@@ -113,7 +117,7 @@ void HummingbirdAudioProcessorEditor::buttonClicked (Button* button)
             stopTimer();
             midiFile.addTrack(trackSequence);
             
-            File myFile = File::createFileWithoutCheckingPath("testFile.mid"); //Not suggested to use this method exactly - just for show
+            File myFile = File::createFileWithoutCheckingPath("testFile.mid");
             FileOutputStream myStream(myFile);
             midiFile.writeTo(myStream);
         }
@@ -126,6 +130,7 @@ void HummingbirdAudioProcessorEditor::buttonClicked (Button* button)
     }
 }
 
+//This function allows the slider to set the tempo of the recording
 void HummingbirdAudioProcessorEditor::sliderValueChanged (Slider* slider)
 {
     processor.tempo = tempoMeter.getValue();
@@ -133,6 +138,7 @@ void HummingbirdAudioProcessorEditor::sliderValueChanged (Slider* slider)
     startTimer(1000 * 60.0 / tempoMeter.getValue());
 }
 
+//callback function
 void HummingbirdAudioProcessorEditor::timerCallback() {
     if (!isRecording) return;
     recordingLabel.setText((String)tempoMeter.getValue() + " opened", dontSendNotification);
